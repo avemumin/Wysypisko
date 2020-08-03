@@ -1,0 +1,35 @@
+﻿@model Wysypisko.ViewModel.DocumentFromViewModel
+@{
+    ViewBag.Title = "DocumentsForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Document create/detail form</h2>
+@using (@Html.BeginForm("Save", "Documents"))
+{
+    @*@Html.ValidationSummary()*@
+    <div class="form-group">
+        @Html.LabelFor(element => element.DocumentName)
+        @Html.TextBoxFor(element => element.DocumentName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(element => element.DocumentName)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(element => element.DateSaved)
+        @Html.TextBoxFor(element => element.DateSaved, "{0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(element => element.DateSaved)
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(element => element.DocumentTypeId)
+        @Html.DropDownListFor(element => element.DocumentTypeId, new SelectList(Model.DocTypes, "Id", "DocumentTypeDescription",0), "[Choose type]", new { @class = "form-control" })
+        @Html.ValidationMessageFor(element=>element.DocumentTypeId)
+    </div>
+
+    @Html.HiddenFor(hidden => hidden.Id)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Wysypisko.Models.Document>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (!Model.Any())
+{
+    <p>Model nie posiada jeszcze żadnych dancyh</p>
+}
+else
+{
+    <table id="documents" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Nazwa</th>
+                <th>Data zapisu</th>
+                <th>Typ dokumentu</th>
+                <th>Usuń</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dok in Model)
+            {
+                <tr>
+                    @*<td>@dok.DocumentName</td>*@
+                    <td>@Html.ActionLink(@dok.DocumentName,"Edit", new {id=dok.Id},null)</td>
+                    <td>@dok.DateSaved</td>
+                    <td>@dok.DocumentType.DocumentTypeDescription</td>
+                    @*<td>
+                        <button data-document-id="@dok.Id" class="btn-link js-delete">Usuń</button>
+                    </td>*@
+                    @using (@Html.BeginForm("Delete", "Documents",new {id=dok.Id}))
+                    {
+                        <td>
+                            <button value="Delete" onclick="return confirm('Czy chcesz usunąć rekord @dok.DocumentName');">Remove item</button>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+@using (@Html.BeginForm("NewOne", "Documents"))
+{
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create new one</button>
+    </div>
+}
+
+
+@*@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#documents .js-delete").on("click",
+                function () {
+                    var button = $(this);
+                    if (confirm("czy chcesz usunac dokument")) {
+                        $.ajax({
+                            url: "/api/documents/" + button.attr("data-document-id"),
+                            method: "DELETE",
+                            success: function () {
+                                button.parents("tr").remove();
+                            }
+                        });
+                    }
+                });
+        });
+    </script>
+}*@
