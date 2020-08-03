@@ -17,4 +17,4 @@ namespace Wysypisko.Models
         [Required(ErrorMessage = "musisz wybrać typ dokumentu")]
         public int DocumentTypeId { get; set; }
     }
-}
+} 
