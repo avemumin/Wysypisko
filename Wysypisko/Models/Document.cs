@@ -6,6 +6,7 @@ using System.Web;
 
 namespace Wysypisko.Models
 {
+    // co to beddzie
     public class Document
     {
         public int Id { get; set; }
